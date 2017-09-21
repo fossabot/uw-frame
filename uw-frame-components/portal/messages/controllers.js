@@ -285,8 +285,9 @@ define(['angular'], function(angular) {
          * On-click event to mark a notification as "seen"
          * @param notification
          * @param isHighPriority
+         * @param origin
          */
-        vm.dismissNotification = function(notification, isHighPriority) {
+        vm.dismissNotification = function(notification, isHighPriority, origin) {
           vm.notifications = $filter('filterOutMessageWithId')(
             vm.notifications,
             notification.id
@@ -296,6 +297,20 @@ define(['angular'], function(angular) {
 
           // Add notification's ID to local array of dismissed notification IDs
           dismissedNotificationIds.push(notification.id);
+
+          if (!origin) {
+            miscService.pushGAEvent(
+              'notification',
+              'dismissed',
+              notification.id
+            );
+          } else {
+            miscService.pushGAEvent(
+              'notification from ' + origin,
+              'dismissed',
+              notification.id
+            );
+          }
 
           // Call service to save changes if k/v store enabled
           if (SERVICE_LOC.kvURL) {
@@ -579,6 +594,8 @@ define(['angular'], function(angular) {
             $rootScope.addPortletToHome(fName);
             actionButton.label = 'On your home';
             actionButton.disabled = true;
+            miscService.pushGAEvent(
+              'Layout Modification', 'Add from mascot', fName);
           }
         };
 

@@ -34,7 +34,7 @@
           <!-- Mascot announcement -->
           <mascot-announcement mode="mobile-menu" header-ctrl="headerCtrl"></mascot-announcement>
           <!-- Notifications -->
-          <notifications-bell mode="mobile-menu" header-ctrl="headerCtrl" ng-if="!GuestMode"></notifications-bell>
+          <notifications-bell mode="mobile-menu" header-ctrl="headerCtrl" ng-click="pushGAEvent('Mobile Menu', 'Click Bell', 'Home');" ng-if="!GuestMode"></notifications-bell>
           <!-- Home link -->
           <md-menu-item>
             <md-button class="md-default" ng-if="APP_FLAGS.isWeb" ng-href="/web" ng-click="pushGAEvent('Mobile Menu', 'Click Link', 'Home');">

@@ -86,6 +86,7 @@
                 <md-button class="md-raised md-accent"
                            ng-show="notification.actionButton"
                            ng-href="{{ notification.actionButton.url }}"
+                           ng-click="vm.pushGAEvent('more info', 'Click Link', notification.actionButton.url)"
                            target="_blank"
                            rel="noopener noreferrer">
                   {{ notification.actionButton.label }}
@@ -102,7 +103,7 @@
             <!-- DISMISS BUTTON -->
             <md-button class="md-icon-button button__mark-seen"
                        ng-hide="notification.dismissible === false"
-                       ng-click="vm.dismissNotification(notification)"
+                       ng-click="vm.dismissNotification(notification, false, 'bell')"
                        aria-label="dismiss this notification"
                        md-prevent-menu-close="md-prevent-menu-close"
                        flex="20">
@@ -127,6 +128,7 @@
         <md-button class="md-raised md-accent"
                    ng-if="priority.actionButton"
                    ng-href="priority.actionButton.url"
+                   ng-click="vm.pushGAEvent('Priority action', 'Click Link', priority.actionButton.url)"
                    target="_blank"
                    rel="noopener noreferrer">
           {{ priority.actionButton.label }}
@@ -134,6 +136,7 @@
         <md-button class="md-raised"
                    ng-if="priority.moreInfoButton"
                    ng-href="priority.moreInfoButton.url"
+                   ng-click="vm.pushGAEvent('Priority more info', 'Click Link', 'Notifications')"
                    target="_blank"
                    rel="noopener noreferrer">
           {{ priority.moreInfoButton.label }}
@@ -151,7 +154,7 @@
     <div class="priority-bubble" ng-if="vm.priorityNotifications.length > 1" layout="row" layout-align="center center" layout-fill>
       <span class="notification-message">You have {{ vm.priorityNotifications.length }} important notifications.</span>
       <div class="compact-buttons">
-        <md-button class="md-raised md-accent" ng-href="{{ vm.notificationsUrl }}">Go to notifications</md-button>
+        <md-button class="md-raised md-accent" ng-click="vm.pushGAEvent('Priority bubble', 'Click Link', 'Notifications')" ng-href="{{ vm.notificationsUrl }}">Go to notifications</md-button>
       </div>
     </div>
   </div>
